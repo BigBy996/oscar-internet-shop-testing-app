@@ -13,7 +13,8 @@ class ProductPage(BasePage):
         success_message = self.browser.find_element(*ProductPageLocators.PRODUCT_NAME_IN_ADDED_MESSAGE).text
         product_name = self.browser.find_element(*ProductPageLocators.PRODUCT_NAME).text
         assert product_name == success_message, \
-            "Product name in success message \"{}\" is not equal to product name \"{}\"".format(success_message, product_name)
+            "Product name in success message \"{}\" is not equal to product name \"{}\"" \
+                .format(success_message, product_name)
 
     def should_see_new_basket_price_message(self):
         assert self.is_element_present(*ProductPageLocators.BASKET_NEW_PRICE_MESSAGE), \
@@ -23,7 +24,16 @@ class ProductPage(BasePage):
         basket_message = self.browser.find_element(*ProductPageLocators.BASKET_NEW_PRICE_MESSAGE).text
         product_price = self.browser.find_element(*ProductPageLocators.PRODUCT_PRICE).text
         assert product_price == basket_message, \
-            "Product price \"{}\" is not equal to updated basket price message \"{}\"".format(product_price, basket_message)
+            "Product price \"{}\" is not equal to updated basket price message \"{}\"" \
+                .format(product_price, basket_message)
+
+    def should_not_be_presented_success_message(self):
+        assert self.is_not_element_present(*ProductPageLocators.BASKET_NEW_PRICE_MESSAGE), \
+            "Success message is presented, but was not supposed to"
+
+    def should_disappear_success_message(self):
+        assert self.is_disappeared(*ProductPageLocators.BASKET_NEW_PRICE_MESSAGE), \
+            "Success message is presented, but should disappear"
 
     def add_product_to_basket(self):
         add_to_basket_button = self.browser.find_element(*ProductPageLocators.ADD_TO_BASKET_BUTTON)
