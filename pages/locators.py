@@ -2,17 +2,23 @@ from selenium.webdriver.common.by import By
 
 
 class BasePageLocators(object):
-    LOGIN_LINK = (By.CSS_SELECTOR, "#login_link")
-    LOGIN_LINK_INVALID = (By.CSS_SELECTOR, "#login_link_inc")
+    LOGIN_LINK = (By.ID, "login_link")
+    LOGIN_LINK_INVALID = (By.ID, "login_link_inc")
+    GO_TO_CART_BUTTON = (By.CSS_SELECTOR, ".btn-group .btn-default[href$='/basket/']")
 
 
-class MainPageLocators(object):
-    LOGIN_LINK = (By.CSS_SELECTOR, "#registration_link")
+class CartPageLocators(object):
+    BASKET_SUMMARY = (By.ID, "basket_formset")
+    EMPTY_BASKET_TEXT = (By.CSS_SELECTOR, "#content_inner > p")
 
 
 class LoginPageLocators(object):
     LOGIN_FORM = (By.ID, "login_form")
     REGISTER_FORM = (By.ID, "register_form")
+
+
+class MainPageLocators(object):
+    LOGIN_LINK = (By.ID, "registration_link")
 
 
 class ProductPageLocators(object):

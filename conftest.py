@@ -1,6 +1,7 @@
 import pytest
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
+from const_storage import TestConfig
 
 
 def pytest_addoption(parser):
@@ -12,20 +13,20 @@ def pytest_addoption(parser):
 
 @pytest.fixture()
 def browser(request):
-    browser_name = request.config.getoption("browser_name")
-    user_language = request.config.getoption("language")
-    if browser_name == "chrome":
+    TestConfig.browser = request.config.getoption("browser_name")
+    TestConfig.language = request.config.getoption("language")
+    if TestConfig.browser == "chrome":
         options = Options()
-        options.add_experimental_option('prefs', {'intl.accept_languages': user_language })
+        options.add_experimental_option('prefs', {'intl.accept_languages': TestConfig.language})
         print("\nstart chrome browser for test..")
         browser = webdriver.Chrome(options=options)
-    elif browser_name == "firefox":
+    elif TestConfig.browser == "firefox":
         firefox_profile = webdriver.FirefoxProfile()
-        firefox_profile.set_preference("intl.accept_languages", user_language)
+        firefox_profile.set_preference("intl.accept_languages", TestConfig.language)
         print("\nstart firefox browser for test..")
         browser = webdriver.Firefox()
     else:
-        print("Browser {} still is not implemented".format(browser_name))
+        print("Browser {} still is not implemented".format(TestConfig.browser))
         browser = None
     yield browser
     print("\nquit browser...")
